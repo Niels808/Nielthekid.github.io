@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untuk Aniqa, Cintaku yang Abadi</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            overflow: hidden;
+            color: #fff;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            perspective: 1000px;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(255,255,255,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+        
+        .card:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff69b4;
+            margin-bottom: 1rem;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #ff69b4;
+        }
+        
+        p {
+            color: #f0f0f0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        
+        .btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            margin: 10px;
+            font-size: 1em;
+        }
+        
+        .btn:hover {
+            background-color: #ff1493;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,20,147,0.4);
+        }
+        
+        #typewriter {
+            min-height: 60px;
+            font-size: 1.2em;
+        }
+        
+        .photo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ff69b4;
+            box-shadow: 0 0 20px rgba(255,105,180,0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-container:hover {
+            transform: scale(1.05);
+        }
+        
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .floating-love {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 24px;
+            user-select: none;
+        }
+        
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <div class="card">
+            <div class="photo-container">
+                <img src="/api/placeholder/200/200" alt="Aniqa">
+            </div>
+            <h1>Untuk Aniqa, Cintaku</h1>
+            <p id="typewriter"></p>
+            <button class="btn" onclick="showLove()">Ungkapkan Cinta</button>
+            <button class="btn" onclick="showMemory()">Kenangan Indah</button>
+        </div>
+    </div>
+    <button id="music-control" class="btn" onclick="toggleMusic()">▶️ Putar Musik</button>
+    <audio id="background-music" loop>
+        <source src="https://example.com/romantic-song.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const loveMessages = [
+            "Aniqa, cintaku padamu lebih dalam dari samudra.",
+            "Setiap detak jantungku bernyanyi untukmu, Aniqa.",
+            "Bersamamu, aku menemukan arti sejati dari kebahagiaan.",
+            "Cintaku padamu tak terbatas, seperti langit tanpa ujung.",
+            "Kau adalah bintang terindah dalam konstelasi hidupku, Aniqa."
+        ];
+        
+        const memories = [
+            "Ingat saat pertama kali kita bertemu? Duniaku berubah selamanya.",
+            "Kencan pertama kita di bawah hujan, setiap tetes adalah saksi cinta kita.",
+            "Malam itu, di bawah bintang-bintang, kita berjanji untuk selamanya.",
+            "Perjalanan kita ke pantai, membuat jejak-jejak cinta abadi di pasir waktu.",
+            "Saat kau tertawa, seluruh alam semesta seakan ikut berbahagia."
+        ];
+        
+        let currentIndex = 0;
+        
+        function typeWriter(text, elementId) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = '';
+            let i = 0;
+            const speed = 50;
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        function showLove() {
+            const message = loveMessages[currentIndex];
+            typeWriter(message, 'typewriter');
+            createFloatingLove(50);
+            currentIndex = (currentIndex + 1) % loveMessages.length;
+        }
+        
+        function showMemory() {
+            const memory = memories[currentIndex];
+            typeWriter(memory, 'typewriter');
+            createFloatingLove(30);
+            currentIndex = (currentIndex + 1) % memories.length;
+        }
+        
+        function createFloatingLove(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const love = document.createElement('div');
+                    love.innerHTML = '❤️';
+                    love.classList.add('floating-love');
+                    love.style.left = Math.random() * window.innerWidth + 'px';
+                    love.style.top = window.innerHeight + 'px';
+                    document.body.appendChild(love);
+                    
+                    gsap.to(love, {
+                        y: -window.innerHeight - 100,
+                        x: (Math.random() - 0.5) * 200,
+                        rotation: Math.random() * 360,
+                        opacity: 0,
+                        duration: 4 + Math.random() * 3,
+                        ease: "power1.out",
+                        onComplete: () => love.remove()
+                    });
+                }, i * 100);
+            }
+        }
+        
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = star.style.height = Math.random() * 3 + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        function toggleMusic() {
+            const music = document.getElementById('background-music');
+            const musicControl = document.getElementById('music-control');
+            if (music.paused) {
+                music.play();
+                musicControl.innerHTML = '⏸️ Jeda Musik';
+            } else {
+                music.pause();
+                musicControl.innerHTML = '▶️ Putar Musik';
+            }
+        }
+        
+        // Initial setup
+        createStars();
+        typeWriter("Klik tombol di bawah untuk melihat ungkapan cintaku...", 'typewriter');
+        
+        // Create initial floating love
+        createFloatingLove(20);
+    </script>
+</body>
+</html>
